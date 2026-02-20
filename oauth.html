@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>OAuth Callback</title>
+</head>
+<body>
+<script>
+  // Extrai o access_token do fragment (#...)
+  const hash = new URLSearchParams((location.hash || '').replace(/^#/, ''));
+  const token = hash.get('access_token');
+
+  // Envia para a janela que abriu o popup
+  if (token && window.opener) {
+    window.opener.postMessage({ type: 'gcal_token', token }, '*');
+  }
+
+  // Fecha o popup
+  window.close();
+</script>
+</body>
+</html>
